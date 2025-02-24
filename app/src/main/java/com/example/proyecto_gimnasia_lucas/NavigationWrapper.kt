@@ -10,7 +10,9 @@ import com.example.composecatalog.navigation.PantallaInicial
 import com.example.composecatalog.navigation.PantallaPrincipal
 import com.example.composecatalog.navigation.PantallaLogin
 import com.example.composecatalog.navigation.PantallaNotas
-import com.example.composecatalog.navigation.PantallaPruebas
+import com.example.composecatalog.navigation.PruebaRV
+import com.example.proyecto_gimnasia_lucas.model.ItemPrueba
+import com.example.proyecto_gimnasia_lucas.model.PruebasList
 
 
 @Composable
@@ -33,18 +35,23 @@ fun NavigationWrapper() {
         composable<PantallaPrincipal> {
             PantallaPrincipal(
                 navigateToNotas = { navController.navigate(PantallaNotas) },
-                navigateToPruebas = { navController.navigate(PantallaPruebas) },
+                navigateToPruebas = { navController.navigate(PruebaRV) },
                 navigateToCalculoIMC = { navController.navigate(PantallaCalculoIMC) }
             )
         }
         composable<PantallaNotas> {
             PantallaNotas { navController.navigate(PantallaPrincipal) }
         }
-        composable<PantallaPruebas> {
-            PantallaPruebas { navController.navigate(PantallaPrincipal) }
-        }
         composable<PantallaCalculoIMC> {
             PantallaCalculoIMC { navController.navigate(PantallaPrincipal) }
+        }
+
+        composable<PruebaRV> {
+            PruebasList(
+                onItemClick = { prueba -> navController.navigate( PruebaRV) },
+                navigateToBack = { navController.navigate(PantallaPrincipal) }
+
+            )
         }
 
     }

@@ -12,10 +12,10 @@ object PantallaPrincipal
 object PantallaNotas
 
 @Serializable
-object PantallaPruebas
-
-@Serializable
 object PantallaInicial
 
 @Serializable
 object PantallaCalculoIMC
+
+@Serializable
+object PruebaRV
