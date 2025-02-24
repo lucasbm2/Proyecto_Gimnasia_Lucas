@@ -1,11 +1,21 @@
-package com.example.proyecto_gimnasia_lucas
+package com.example.composecatalog.navigation
 
 import kotlinx.serialization.Serializable
 
-
-//objeto para referenciar a la pantalla login
 @Serializable
-object Login
+object PantallaLogin
 
 @Serializable
-object MenuPrincipal
+object PantallaPrincipal
+
+@Serializable
+object PantallaNotas
+
+@Serializable
+object PantallaPruebas
+
+@Serializable
+object PantallaInicial
+
+@Serializable
+object PantallaCalculoIMC
