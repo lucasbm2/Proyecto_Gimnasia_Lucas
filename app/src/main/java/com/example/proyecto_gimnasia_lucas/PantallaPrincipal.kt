@@ -8,9 +8,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,12 +31,13 @@ import androidx.compose.ui.unit.sp
 fun PantallaPrincipal(
     navigateToNotas: () -> Unit,
     navigateToPruebas: () -> Unit,
-    navigateToCalculoIMC : () -> Unit
+    navigateToCalculoIMC: () -> Unit
 ) {
     var text by remember { mutableStateOf("") }
     var peso by remember { mutableStateOf("") }
     var edad by remember { mutableStateOf("") }
     var altura by remember { mutableStateOf("") }
+    var showDialog by remember { mutableStateOf(false) }
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(modifier = Modifier.weight(1f))
         Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
@@ -42,20 +45,28 @@ fun PantallaPrincipal(
                 Text(
                     text = "Pruebas",
                     fontSize = 15.sp,
-                    modifier = Modifier.padding(10.dp))
+                    modifier = Modifier.padding(10.dp)
+                )
             }
             Spacer(modifier = Modifier.width(80.dp))
             Button(onClick = { navigateToNotas() }) {
                 Text(
                     text = "Notas",
                     fontSize = 15.sp,
-                    modifier = Modifier.padding(10.dp))
-             }
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
         }
 
         Spacer(modifier = Modifier.weight(0.8f))
-        Text(text = "INTRODUCE TUS DATOS", fontSize = 35.sp, fontWeight = FontWeight.Bold)
-        Spacer(modifier = Modifier.weight(0.5f))
+        Text(
+            text = "INTRODUCE TUS DATOS",
+            fontSize = 35.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(start = 10.dp),
+            lineHeight = 40.sp,
+        )
+        Spacer(modifier = Modifier.weight(0.2f))
         Text(text = "Peso", fontSize = 20.sp, modifier = Modifier.padding(bottom = 16.dp))
         TextField(
             value = peso,
@@ -89,20 +100,46 @@ fun PantallaPrincipal(
                 )
                 Text(text = "Mujer")
             }
-
         }
+
         Spacer(modifier = Modifier.weight(0.4f))
 
-        Button(onClick = { navigateToCalculoIMC() }) {
+        Button(onClick = { showDialog = true }) {
             Text(
                 text = "Calcular IMC",
                 fontSize = 18.sp,
-                modifier = Modifier.padding(10.dp))
+                modifier = Modifier.padding(10.dp)
+            )
         }
         Spacer(modifier = Modifier.weight(1f))
     }
+
+    MyDialog(show = showDialog, onDismiss = { showDialog = false }, onConfirm = {
+        navigateToCalculoIMC()
+        showDialog = false
+    })
 }
 
+@Composable
+fun MyDialog(show: Boolean, onDismiss: () -> Unit, onConfirm: () -> Unit) {
+    if (show) {
+        AlertDialog(
+            onDismissRequest = { onDismiss() },
+            confirmButton = {
+                TextButton(onClick = { onConfirm() }) {
+                    Text(text = "Confirmar")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { onDismiss() }) {
+                    Text(text = "Cancelar")
+                }
+            },
+            title = { Text(text = "Confirmar IMC") },
+            text = { Text(text = "¿Estás seguro de que quieres calcular tu IMC con estos datos?") }
+        )
+    }
+}
 
 @Preview(showBackground = true)
 @Composable

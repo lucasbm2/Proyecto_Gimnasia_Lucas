@@ -8,7 +8,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -98,20 +103,41 @@ fun PruebasList(onItemClick: (Prueba) -> Unit, navigateToBack: () -> Unit) {
             "https://www.bodytone.eu/fr/todo-lo-que-debes-saber-sobre-el-slam-ball/"
         )
     )
+
+    var palabraInsertada by remember { mutableStateOf("") }
+
+    val filteredPruebas = pruebas.filter {
+        it.nombre.contains(palabraInsertada, ignoreCase = true)
+    }
+
+    Spacer(modifier = Modifier.height(10.dp))
+
     Column(modifier = Modifier.fillMaxSize()) {
+
+        TextField(
+            value = palabraInsertada,
+            onValueChange = { palabraInsertada = it },
+            label = { Text("Buscar por nombre") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            singleLine = true
+        )
+
         LazyColumn() {
-            items(pruebas) { prueba ->
+            items(filteredPruebas) { prueba ->
                 ItemPrueba(prueba = prueba, onItemClick = onItemClick)
             }
         }
-        Box(contentAlignment = Alignment.BottomStart) {
 
+        Box(contentAlignment = Alignment.BottomStart) {
             Button(onClick = { navigateToBack() }) {
                 Text(text = "Volver atrás")
             }
         }
     }
 }
+
 
 
 @Preview(showBackground = true)
