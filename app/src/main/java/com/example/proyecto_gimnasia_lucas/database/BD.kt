@@ -9,7 +9,7 @@ open class BDDGimnasia(context: Context) : SQLiteOpenHelper(context, "bddGimnasi
     private val crearTablaLogin = "CREATE TABLE login(id INTEGER PRIMARY KEY AUTOINCREMENT, usuario TEXT, password TEXT)"
     private val borrarTablaLogin = "DROP TABLE IF EXISTS login"
 
-    private val crearTablaDatos = "CREATE TABLE datos(id INTEGER PRIMARY KEY AUTOINCREMENT, edad INTEGER, peso INTEGER, altura INTEGER, sexo BOOLEAN)"
+    private val crearTablaDatos = "CREATE TABLE datos(id INTEGER PRIMARY KEY AUTOINCREMENT, edad INTEGER, peso INTEGER, altura INTEGER, sexo INTEGER)"
     private val borrarTablaDatos = "DROP TABLE IF EXISTS datos"
 
     private val crearTablaMarcas = "CREATE TABLE marcas(id INTEGER PRIMARY KEY AUTOINCREMENT, abdominales INTEGER, flexibilidad INTEGER, testcooper INTEGER, velocidad INTEGER, lanzamientobalon INTEGER)"

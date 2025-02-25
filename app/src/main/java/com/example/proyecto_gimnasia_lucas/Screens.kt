@@ -19,3 +19,9 @@ object PantallaCalculoIMC
 
 @Serializable
 object PruebaRV
+
+@Serializable
+object PantallaMarcas
+
+@Serializable
+object PruebasList

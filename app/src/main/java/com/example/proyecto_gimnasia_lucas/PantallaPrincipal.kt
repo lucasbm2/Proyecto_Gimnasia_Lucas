@@ -1,6 +1,7 @@
 package com.example.proyecto_gimnasia_lucas
 
 
+import android.os.Parcelable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,29 +26,41 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.parcelize.Parcelize
+import java.io.Serializable
+
 
 
 @Composable
 fun PantallaPrincipal(
     navigateToNotas: () -> Unit,
-    navigateToPruebas: () -> Unit,
-    navigateToCalculoIMC: () -> Unit
+    navigateToPruebas: ( DatosUsuario) -> Unit,
+    navigateToCalculoIMC: (DatosUsuario) -> Unit
 ) {
-    var text by remember { mutableStateOf("") }
+    var genero by remember { mutableStateOf("") }
     var peso by remember { mutableStateOf("") }
     var edad by remember { mutableStateOf("") }
     var altura by remember { mutableStateOf("") }
     var showDialog by remember { mutableStateOf(false) }
+
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(modifier = Modifier.weight(1f))
         Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
-            Button(onClick = { navigateToPruebas() }) {
-                Text(
-                    text = "Pruebas",
-                    fontSize = 15.sp,
-                    modifier = Modifier.padding(10.dp)
+            Button(onClick = {
+                val datosUsuario = DatosUsuario(
+                    peso = peso.toIntOrNull() ?: 0,
+                    edad = edad.toIntOrNull() ?: 0,
+                    altura = altura.toIntOrNull() ?: 0,
+                    genero = genero
                 )
+
+                println("📋 Enviando datos desde PantallaPrincipal: $datosUsuario")
+
+                navigateToPruebas(datosUsuario)
+            }) {
+                Text("Ir a Pruebas")
             }
+
             Spacer(modifier = Modifier.width(80.dp))
             Button(onClick = { navigateToNotas() }) {
                 Text(
@@ -83,7 +96,7 @@ fun PantallaPrincipal(
         TextField(
             value = altura,
             onValueChange = { altura = it },
-            placeholder = { Text(text = "Introduce tu altura") })
+            placeholder = { Text(text = "Introduce tu altura (en cm)") })
         Spacer(modifier = Modifier.weight(0.4f))
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Row(
@@ -91,12 +104,12 @@ fun PantallaPrincipal(
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 RadioButton(
-                    selected = (text == "Hombre"), onClick = { text = "Hombre" }, enabled = true
+                    selected = (genero == "Hombre"), onClick = { genero = "Hombre" }, enabled = true
                 )
                 Text(text = "Hombre")
 
                 RadioButton(
-                    selected = (text == "Mujer"), onClick = { text = "Mujer" }, enabled = true
+                    selected = (genero == "Mujer"), onClick = { genero = "Mujer" }, enabled = true
                 )
                 Text(text = "Mujer")
             }
@@ -115,10 +128,21 @@ fun PantallaPrincipal(
     }
 
     MyDialog(show = showDialog, onDismiss = { showDialog = false }, onConfirm = {
-        navigateToCalculoIMC()
+        navigateToCalculoIMC( DatosUsuario(peso = peso.toInt(), edad = edad.toInt(), altura = altura.toInt(), genero = genero) )
         showDialog = false
     })
 }
+
+
+@Parcelize
+data class DatosUsuario(
+    val peso: Int,
+    val edad: Int,
+    val altura: Int,
+    val genero: String
+) : Parcelable
+
+
 
 @Composable
 fun MyDialog(show: Boolean, onDismiss: () -> Unit, onConfirm: () -> Unit) {

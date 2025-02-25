@@ -126,11 +126,26 @@ class LoginDBHelper(context: Context): BDDGimnasia(context) {
 
     // Función para verificar si un usuario existe con el nombre y contraseña dados
     fun verificarUsuario(usuario: String, password: String): Boolean {
-        val db: SQLiteDatabase = this.readableDatabase
+        val db: SQLiteDatabase = readableDatabase
         val cursor: Cursor = db.rawQuery("SELECT * FROM login WHERE usuario = ? AND password = ?", arrayOf(usuario, password))
 
         val exists = cursor.moveToFirst() // Si encuentra algún registro, el usuario y contraseña son válidos
         cursor.close()
         return exists
     }
+
+    fun getNombreUsuarioPorNombre(usuario: String): String? {
+        val db: SQLiteDatabase = readableDatabase
+        var nombreUsuarioEncontrado: String? = null
+        val cursor: Cursor = db.rawQuery("SELECT usuario FROM login WHERE usuario = ?", arrayOf(usuario))
+
+        if (cursor.moveToFirst()) {
+            nombreUsuarioEncontrado = cursor.getString(0)
+        }
+        cursor.close()
+        return nombreUsuarioEncontrado
+    }
+
+
 }
+
