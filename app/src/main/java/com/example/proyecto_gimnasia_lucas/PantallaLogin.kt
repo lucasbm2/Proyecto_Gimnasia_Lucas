@@ -60,7 +60,7 @@ fun PantallaLogin(
             Button(onClick = { navigateToBack() }) {
                 Text(text = "Volver atrás")
             }
-            Button(onClick = { navigateToPantallaPrincipal() }) {
+            Button(verificarUsuario(usuario, contrasena)) {
                 Text(text = "Entrar")
             }
         }
