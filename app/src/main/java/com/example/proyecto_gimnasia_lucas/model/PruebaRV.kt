@@ -114,23 +114,27 @@ fun PruebasList(onItemClick: (Prueba) -> Unit, navigateToBack: () -> Unit) {
 
     Column(modifier = Modifier.fillMaxSize()) {
 
+        Spacer(modifier = Modifier.height(50.dp))
         TextField(
             value = palabraInsertada,
             onValueChange = { palabraInsertada = it },
             label = { Text("Buscar por nombre") },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(16.dp)
+                .height(60.dp),
             singleLine = true
         )
 
-        LazyColumn() {
+        LazyColumn(
+            modifier = Modifier.weight(1f) ) {
             items(filteredPruebas) { prueba ->
                 ItemPrueba(prueba = prueba, onItemClick = onItemClick)
             }
         }
 
-        Box(contentAlignment = Alignment.BottomStart) {
+        Box(contentAlignment = Alignment.BottomStart,
+            modifier = Modifier.fillMaxWidth().weight(0.1f) ) {
             Button(onClick = { navigateToBack() }) {
                 Text(text = "Volver atrás")
             }

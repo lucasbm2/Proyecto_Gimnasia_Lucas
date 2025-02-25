@@ -69,7 +69,8 @@ fun PantallaCalculoIMC(navigateToBack: () -> Unit) {
                     value = peso,
                     onValueChange = { peso = it },
                     label = { Text(text = "Peso (kg)") },
-                    modifier = Modifier.wrapContentSize()
+                    modifier = Modifier.wrapContentSize(),
+                    readOnly = true,
                 )
             }
         }
