@@ -20,7 +20,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -73,7 +72,7 @@ fun PruebasList(
     navigateToBack: () -> Unit
 ) {
     val pruebas = when {
-        datosUsuario.edad < 12 -> null
+        datosUsuario.edad < 12 -> emptyList()
         datosUsuario.edad == 12 -> listOf(
             Prueba("Abdominales", "Prueba de abdominales", R.drawable.abdominales, ""),
             Prueba("Flexibilidad", "Prueba de flexibilidad", R.drawable.flexibilidad, ""),
@@ -105,39 +104,22 @@ fun PruebasList(
             Prueba("Lanzamiento Balon 2kg", "Prueba de lanzamiento de balón", R.drawable.balon, "")
         )
 
-        else -> null
+        else -> emptyList()
     }
 
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        if (pruebas == null) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "Introduce una edad válida (+12)",
-                    fontSize = 18.sp,
-                    color = Color.Red,
-                    textAlign = TextAlign.Center
+    Column(modifier = Modifier.fillMaxSize()) {
+
+
+        LazyColumn(modifier = Modifier.weight(1f)) {
+            items(pruebas) { prueba ->
+                ItemPrueba(
+                    prueba = prueba,
+                    datosUsuario = datosUsuario,
+                    onItemClick = { pruebaSeleccionada, datosUsuario ->
+                        onItemClick(pruebaSeleccionada, datosUsuario)
+                    }
                 )
-            }
-        } else {
-            LazyColumn(modifier = Modifier.weight(1f)) {
-                items(pruebas) { prueba ->
-                    ItemPrueba(
-                        prueba = prueba,
-                        datosUsuario = datosUsuario,
-                        onItemClick = { pruebaSeleccionada, datosUsuario ->
-                            onItemClick(pruebaSeleccionada, datosUsuario)
-                        }
-                    )
-                }
             }
         }
 
@@ -145,5 +127,4 @@ fun PruebasList(
             Text(text = "Volver atrás")
         }
     }
-
 }

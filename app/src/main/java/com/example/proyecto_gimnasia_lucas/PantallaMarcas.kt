@@ -27,21 +27,36 @@ import com.example.proyecto_gimnasia_lucas.R
 import com.example.proyecto_gimnasia_lucas.database.EntMarcas
 
 @Composable
-fun MostrarDatos(datosUsuario: DatosUsuario?) {
-    if (datosUsuario == null) {
-        Text(text = "No se encontraron datos del usuario", color = Color.Red)
-        println("datosUsuario es nulo")
-    } else {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
+fun MostrarDatos(
+    datosUsuario: DatosUsuario?,
+    navigateToBack: () -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        if (datosUsuario == null) {
+            Text(
+                text = "No se encontraron datos del usuario",
+                fontSize = 18.sp,
+                color = Color.Red,
+                modifier = Modifier.padding(16.dp)
+            )
+            println("datosUsuario es nulo")
+        } else {
             Text(text = "Datos del Usuario", fontSize = 24.sp, fontWeight = FontWeight.Bold)
             Text(text = "Peso: ${datosUsuario.peso}")
             Text(text = "Edad: ${datosUsuario.edad}")
             Text(text = "Altura: ${datosUsuario.altura}")
             Text(text = "Género: ${datosUsuario.genero}")
         }
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Button(onClick = navigateToBack) {
+            Text(text = "Volver atrás")
+        }
     }
 }
+

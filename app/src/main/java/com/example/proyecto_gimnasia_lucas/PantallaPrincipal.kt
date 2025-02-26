@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,11 +38,12 @@ fun PantallaPrincipal(
     navigateToPruebas: ( DatosUsuario) -> Unit,
     navigateToCalculoIMC: (DatosUsuario) -> Unit
 ) {
-    var genero by remember { mutableStateOf("") }
-    var peso by remember { mutableStateOf("") }
-    var edad by remember { mutableStateOf("") }
-    var altura by remember { mutableStateOf("") }
-    var showDialog by remember { mutableStateOf(false) }
+    var genero by rememberSaveable { mutableStateOf("") }
+    var peso by rememberSaveable { mutableStateOf("") }
+    var edad by rememberSaveable { mutableStateOf("") }
+    var altura by rememberSaveable { mutableStateOf("") }
+    var showDialog by rememberSaveable { mutableStateOf(false) }
+
 
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(modifier = Modifier.weight(1f))

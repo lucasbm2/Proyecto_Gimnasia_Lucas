@@ -65,10 +65,11 @@ fun NavigationWrapper() {
 
             if (datosUsuario != null) {
                 println("DatosUsuario recuperado en PantallaMarcas: $datosUsuario")
-                MostrarDatos(datosUsuario)
+                MostrarDatos(datosUsuario, navigateToBack = { navController.popBackStack() })
             } else {
                 println("No se encontraron datos del usuario.")
             }
+
         }
 
     }
