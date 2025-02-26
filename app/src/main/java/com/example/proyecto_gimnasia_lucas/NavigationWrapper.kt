@@ -32,6 +32,18 @@ fun NavigationWrapper() {
             )
         }
 
+        composable("PantallaCalculoIMC") {
+            val datosUsuario = navController.previousBackStackEntry
+                ?.savedStateHandle
+                ?.get<DatosUsuario>("datosUsuario")
+
+            PantallaCalculoIMC(
+                navigateToBack = { navController.popBackStack() },
+                datosUsuario = datosUsuario ?: DatosUsuario(0, 0, 0, "Sin género")
+            )
+        }
+
+
         composable("PantallaPrincipal") {
             PantallaPrincipal(
                 navigateToNotas = { navController.navigate("PantallaNotas") },
@@ -39,7 +51,10 @@ fun NavigationWrapper() {
                     navController.currentBackStackEntry?.savedStateHandle?.set("datosUsuario", datosUsuario)
                     navController.navigate("PruebaRV")
                 },
-                navigateToCalculoIMC = { navController.navigate("PantallaCalculoIMC") }
+                navigateToCalculoIMC = { datosUsuario ->
+                    navController.currentBackStackEntry?.savedStateHandle?.set("datosUsuario", datosUsuario)
+                    navController.navigate("PantallaCalculoIMC")
+                }
             )
         }
 
@@ -59,18 +74,17 @@ fun NavigationWrapper() {
             )
         }
 
-
         composable("PantallaMarcas") {
-            val datosUsuario = navController.previousBackStackEntry?.savedStateHandle?.get<DatosUsuario>("datosUsuario")
+            val datosUsuario = navController.previousBackStackEntry
+                ?.savedStateHandle
+                ?.get<DatosUsuario>("datosUsuario")
 
-            if (datosUsuario != null) {
-                println("DatosUsuario recuperado en PantallaMarcas: $datosUsuario")
-                MostrarDatos(datosUsuario, navigateToBack = { navController.popBackStack() })
-            } else {
-                println("No se encontraron datos del usuario.")
-            }
-
+            MostrarDatos(
+                datosUsuario = datosUsuario,
+                navigateToBack = { navController.popBackStack() }
+            )
         }
+
 
     }
 

@@ -29,8 +29,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun PantallaCalculoIMC(navigateToBack: () -> Unit) {
-    var peso by remember { mutableStateOf("") }
+fun PantallaCalculoIMC(navigateToBack: () -> Unit, datosUsuario: DatosUsuario) {
+
+
+
+    val imc = if (datosUsuario.altura > 0) {
+        datosUsuario.peso / ((datosUsuario.altura / 100.0) * (datosUsuario.altura / 100.0))
+    } else {
+        0.0
+    }
 
     Column(
         modifier = Modifier
@@ -47,33 +54,41 @@ fun PantallaCalculoIMC(navigateToBack: () -> Unit) {
             modifier = Modifier.padding(bottom = 32.dp)
         )
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    text = "IMC calculado: ",
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF3F51B5),
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
+        Text(
+            text = "IMC calculado: %.2f".format(imc),
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color(0xFF3F51B5),
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
 
-                TextField(
-                    value = peso,
-                    onValueChange = { peso = it },
-                    label = { Text(text = "Peso (kg)") },
-                    modifier = Modifier.wrapContentSize(),
-                    readOnly = true,
-                )
+        Spacer(modifier = Modifier.padding(16.dp))
+
+        val mensaje = when {
+            datosUsuario.genero == "Hombre" -> when (imc) {
+                in 0.0..18.4 -> "Hay que comer más"
+                in 18.5..24.9 -> "De categoría"
+                in 25.0..29.9 -> "Recorta la cerveza de después de trabajar"
+                in 30.0..150.0 -> "Cuidado ahí, salud primero"
+                else -> "IMC fuera de rango"
             }
+            datosUsuario.genero == "Mujer" -> when (imc) {
+                in 0.0..18.4 -> "Come más cosas"
+                in 18.5..24.9 -> "Te mantienes perfectamente"
+                in 25.0..29.9 -> "Recorta los dulces"
+                in 30.0..150.0 -> "Cuidado de verdad"
+                else -> "IMC fuera de rango"
+            }
+            else -> "Datos de género no reconocidos"
         }
+
+        Text(
+            text = mensaje,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color(0xFF3F51B5),
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
 
         Spacer(modifier = Modifier.padding(16.dp))
 
@@ -97,8 +112,3 @@ fun PantallaCalculoIMC(navigateToBack: () -> Unit) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PantallaCalculoIMCPreview() {
-    PantallaCalculoIMC(navigateToBack = {})
-}
