@@ -35,6 +35,8 @@ import com.example.proyecto_gimnasia_lucas.database.DatosDBHelper
 import com.example.proyecto_gimnasia_lucas.database.LoginDBHelper
 import kotlinx.parcelize.Parcelize
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -86,7 +88,8 @@ fun PantallaPrincipal(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
+            .background(MaterialTheme.colorScheme.background)
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
@@ -117,15 +120,12 @@ fun PantallaPrincipal(
                 )
                 guardarDatos()
                 navigateToPruebas(datosUsuario)
-            }) {
+            }, modifier = Modifier.size(width = 150.dp, height = 50.dp)) {
                 Text("Ir a Pruebas")
             }
 
             Spacer(modifier = Modifier.width(80.dp))
 
-            Button(onClick = { navigateToNotas() }) {
-                Text("Notas")
-            }
         }
 
         Spacer(modifier = Modifier.weight(0.8f))
@@ -182,8 +182,8 @@ fun PantallaPrincipal(
         Button(onClick = {
             showDialog = true
             guardarDatos()
-        }) {
-            Text(text = "Calcular IMC", fontSize = 18.sp)
+        }, modifier = Modifier.size(width = 250.dp, height = 100.dp)) {
+            Text(text = "Calcular IMC", fontSize = 25.sp)
         }
         Spacer(modifier = Modifier.weight(1f))
     }

@@ -71,7 +71,18 @@ fun PruebasList(
     onItemClick: (Prueba, DatosUsuario) -> Unit,
     navigateToBack: () -> Unit
 ) {
-    val pruebas = when {
+    // Mapa de categorías con sus pruebas
+    val categoriasPruebas = mapOf(
+        "Fuerza" to listOf("Abdominales", "Lanzamiento Balon 2kg"),
+        "Flexibilidad" to listOf("Flexibilidad"),
+        "Velocidad" to listOf("Velocidad"),
+        "Resistencia" to listOf("Test de Cooper"),
+        "Agilidad" to emptyList(),
+        "Coordinación" to emptyList()
+    )
+
+    // Lista de pruebas según la edad del usuario
+    val pruebasDisponibles = when {
         datosUsuario.edad < 12 -> emptyList()
         datosUsuario.edad == 12 -> listOf(
             Prueba("Abdominales", "Prueba de abdominales", R.drawable.abdominales, ""),
@@ -103,27 +114,44 @@ fun PruebasList(
             Prueba("Velocidad", "Prueba de velocidad", R.drawable.velocidad, ""),
             Prueba("Lanzamiento Balon 2kg", "Prueba de lanzamiento de balón", R.drawable.balon, "")
         )
-
         else -> emptyList()
     }
 
+    // Agrupar las pruebas por categoría
+    val pruebasPorCategoria = categoriasPruebas.mapValues { (_, listaPruebas) ->
+        pruebasDisponibles.filter { it.nombre in listaPruebas }
+    }.filterValues { it.isNotEmpty() } // Filtrar categorías sin pruebas disponibles
 
-    Column(modifier = Modifier.fillMaxSize()) {
-
+    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        Text(
+            text = "Clasificación de Pruebas",
+            fontSize = 22.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
 
         LazyColumn(modifier = Modifier.weight(1f)) {
-            items(pruebas) { prueba ->
-                ItemPrueba(
-                    prueba = prueba,
-                    datosUsuario = datosUsuario,
-                    onItemClick = { pruebaSeleccionada, datosUsuario ->
-                        onItemClick(pruebaSeleccionada, datosUsuario)
-                    }
-                )
+            pruebasPorCategoria.forEach { (categoria, pruebas) ->
+                item {
+                    Text(
+                        text = categoria,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF3F51B5),
+                        modifier = Modifier.padding(vertical = 8.dp)
+                    )
+                }
+                items(pruebas) { prueba ->
+                    ItemPrueba(
+                        prueba = prueba,
+                        datosUsuario = datosUsuario,
+                        onItemClick = onItemClick
+                    )
+                }
             }
         }
 
-        Button(onClick = { navigateToBack() }) {
+        Button(onClick = { navigateToBack() }, modifier = Modifier.fillMaxWidth().padding(top = 16.dp)) {
             Text(text = "Volver atrás")
         }
     }
