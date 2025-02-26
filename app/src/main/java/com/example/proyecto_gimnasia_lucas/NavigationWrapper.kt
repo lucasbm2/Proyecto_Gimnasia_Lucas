@@ -13,11 +13,12 @@ import com.example.composecatalog.navigation.PantallaMarcas
 import com.example.composecatalog.navigation.PantallaNotas
 import com.example.composecatalog.navigation.PruebaRV
 import com.example.proyecto_gimnasia_lucas.model.ItemPrueba
+import com.example.proyecto_gimnasia_lucas.model.Prueba
 import com.example.proyecto_gimnasia_lucas.model.PruebasList
 
 
 @Composable
-fun NavigationWrapper() {
+fun NavigationWrapper( onThemeToggle : () -> Unit) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "PantallaInicial") {
@@ -45,7 +46,12 @@ fun NavigationWrapper() {
 
 
         composable("PantallaPrincipal") {
+            val nombreUsuario = navController.previousBackStackEntry
+                ?.savedStateHandle
+                ?.get<String>("nombreUsuario") ?: "Desconocido"
+
             PantallaPrincipal(
+                nombreUsuario = nombreUsuario,
                 navigateToNotas = { navController.navigate("PantallaNotas") },
                 navigateToPruebas = { datosUsuario ->
                     navController.currentBackStackEntry?.savedStateHandle?.set("datosUsuario", datosUsuario)
@@ -54,9 +60,12 @@ fun NavigationWrapper() {
                 navigateToCalculoIMC = { datosUsuario ->
                     navController.currentBackStackEntry?.savedStateHandle?.set("datosUsuario", datosUsuario)
                     navController.navigate("PantallaCalculoIMC")
-                }
+                },
+                onThemeToggle = onThemeToggle
             )
         }
+
+
 
         composable("PruebaRV") {
             val datosUsuario = navController.previousBackStackEntry?.savedStateHandle?.get<DatosUsuario>("datosUsuario")
@@ -64,9 +73,9 @@ fun NavigationWrapper() {
             PruebasList(
                 datosUsuario = datosUsuario ?: DatosUsuario(0, 0, 0, "Sin género"),
                 onItemClick = { prueba, datosUsuario ->
-                    println("Guardando datos antes de navegar a PantallaMarcas: $datosUsuario")
 
 
+                    navController.currentBackStackEntry?.savedStateHandle?.set("prueba", prueba)
                     navController.currentBackStackEntry?.savedStateHandle?.set("datosUsuario", datosUsuario)
                     navController.navigate("PantallaMarcas")
                 },
@@ -79,8 +88,13 @@ fun NavigationWrapper() {
                 ?.savedStateHandle
                 ?.get<DatosUsuario>("datosUsuario")
 
+            val prueba = navController.previousBackStackEntry
+                ?.savedStateHandle
+                ?.get<Prueba>("prueba")
+
             MostrarDatos(
                 datosUsuario = datosUsuario,
+                prueba = prueba,
                 navigateToBack = { navController.popBackStack() }
             )
         }

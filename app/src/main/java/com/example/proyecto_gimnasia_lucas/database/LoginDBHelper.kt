@@ -39,6 +39,7 @@ class LoginDBHelper(context: Context): BDDGimnasia(context) {
         return usuarioID.toLong()
     }
 
+
     // Función para actualizar los datos de un usuario
     fun actualizarUsuario(usuario: EntLogin): Long {
         val db: SQLiteDatabase = this.writableDatabase
@@ -146,6 +147,16 @@ class LoginDBHelper(context: Context): BDDGimnasia(context) {
         return nombreUsuarioEncontrado
     }
 
+    fun getIdUsuarioPorNombre(usuario: String): Int? {
+        val db: SQLiteDatabase = readableDatabase
+        var idUsuarioEncontrado: Int? = null
+        val cursor: Cursor = db.rawQuery("SELECT id FROM login WHERE usuario = ?", arrayOf(usuario))
+        if (cursor.moveToFirst()) {
+            idUsuarioEncontrado = cursor.getInt(0)
+        }
+        cursor.close()
+        return idUsuarioEncontrado
+    }
 
 }
 

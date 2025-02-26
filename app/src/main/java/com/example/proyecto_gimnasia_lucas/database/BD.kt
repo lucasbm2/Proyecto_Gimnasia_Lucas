@@ -4,7 +4,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-open class BDDGimnasia(context: Context) : SQLiteOpenHelper(context, "bddGimnasia", null, 1) {
+open class BDDGimnasia(context: Context) : SQLiteOpenHelper(context, "bddGimnasia", null, 2) {
 
     private val crearTablaLogin = "CREATE TABLE login(id INTEGER PRIMARY KEY AUTOINCREMENT, usuario TEXT, password TEXT)"
     private val borrarTablaLogin = "DROP TABLE IF EXISTS login"

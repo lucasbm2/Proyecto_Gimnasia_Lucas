@@ -1,38 +1,18 @@
 package com.example.proyecto_gimnasia_lucas
 
-
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
 fun PantallaCalculoIMC(navigateToBack: () -> Unit, datosUsuario: DatosUsuario) {
-
-
-
     val imc = if (datosUsuario.altura > 0) {
         datosUsuario.peso / ((datosUsuario.altura / 100.0) * (datosUsuario.altura / 100.0))
     } else {
@@ -42,6 +22,7 @@ fun PantallaCalculoIMC(navigateToBack: () -> Unit, datosUsuario: DatosUsuario) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -50,7 +31,7 @@ fun PantallaCalculoIMC(navigateToBack: () -> Unit, datosUsuario: DatosUsuario) {
             text = "Cálculo de IMC",
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
-            color = Color(0xFF3F51B5),
+            color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.padding(bottom = 32.dp)
         )
 
@@ -58,7 +39,7 @@ fun PantallaCalculoIMC(navigateToBack: () -> Unit, datosUsuario: DatosUsuario) {
             text = "IMC calculado: %.2f".format(imc),
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            color = Color(0xFF3F51B5),
+            color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.padding(bottom = 8.dp)
         )
 
@@ -86,7 +67,7 @@ fun PantallaCalculoIMC(navigateToBack: () -> Unit, datosUsuario: DatosUsuario) {
             text = mensaje,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            color = Color(0xFF3F51B5),
+            color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.padding(bottom = 8.dp)
         )
 
@@ -98,8 +79,8 @@ fun PantallaCalculoIMC(navigateToBack: () -> Unit, datosUsuario: DatosUsuario) {
                 .fillMaxWidth()
                 .padding(horizontal = 32.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF3F51B5),
-                contentColor = Color.White
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
             ),
             shape = RoundedCornerShape(12.dp)
         ) {
@@ -111,4 +92,3 @@ fun PantallaCalculoIMC(navigateToBack: () -> Unit, datosUsuario: DatosUsuario) {
         }
     }
 }
-

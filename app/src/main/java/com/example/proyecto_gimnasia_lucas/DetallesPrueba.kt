@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun PantallaDetallePrueba(
     navigateBack: () -> Unit,
+
     nombre: String
 ) {
 

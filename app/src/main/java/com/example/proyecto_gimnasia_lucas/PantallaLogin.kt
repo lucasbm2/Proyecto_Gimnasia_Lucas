@@ -29,9 +29,9 @@ import com.example.proyecto_gimnasia_lucas.database.LoginDBHelper
 
 @Composable
 fun PantallaLogin(
-    navigateToPantallaPrincipal: () -> Unit = {},
-    navigateToBack: () -> Unit) {
-
+    navigateToPantallaPrincipal: (String) -> Unit = {},
+    navigateToBack: () -> Unit
+) {
     val context = LocalContext.current
     val loginHelper = LoginDBHelper(context = LocalContext.current)
 
@@ -69,46 +69,41 @@ fun PantallaLogin(
             }
 
             Button(onClick = {
-
                 if (usuario.isEmpty()) {
                     Toast.makeText(context, "Introduzca un nombre de usuario", Toast.LENGTH_SHORT).show()
                 } else if (contrasena.isEmpty()) {
                     Toast.makeText(context, "Introduzca una contraseña", Toast.LENGTH_SHORT).show()
                 } else {
-                val nombreUsuarioEncontrado = loginHelper.getNombreUsuarioPorNombre(usuario)
+                    // Obtener el nombre de usuario desde la base de datos
+                    val nombreUsuarioEncontrado = loginHelper.getNombreUsuarioPorNombre(usuario)
 
-                if (nombreUsuarioEncontrado != null ) {
-                    val usuarioExiste = loginHelper.verificarUsuario(usuario, contrasena)
-                    if (usuarioExiste) {
-                        Toast.makeText(context, "Bienvenido $nombreUsuarioEncontrado", Toast.LENGTH_SHORT).show()
-                        navigateToPantallaPrincipal()
-                    } else {
-                        Toast.makeText(context, "Contraseña incorrecta", Toast.LENGTH_SHORT).show()
-                    }
-                } else {
-                    Toast.makeText(context, "Usuario no encontrado, creando usuario...", Toast.LENGTH_SHORT).show()
+                    if (nombreUsuarioEncontrado != null) {
+                        val usuarioExiste = loginHelper.verificarUsuario(usuario, contrasena)
+                        if (usuarioExiste) {
+                            Toast.makeText(context, "Bienvenido $nombreUsuarioEncontrado", Toast.LENGTH_SHORT).show()
 
-                    val nuevoUsuario = EntLogin(usuario = usuario, password = contrasena)
-                    val usuarioID = loginHelper.insertarUsuario(nuevoUsuario)
-
-                    Toast.makeText(context, "Nuevo usuario insertado: $usuario", Toast.LENGTH_SHORT).show()
-
-                    navigateToPantallaPrincipal()
+                            // Pasar directamente el nombre encontrado a la siguiente pantalla
+                            navigateToPantallaPrincipal(nombreUsuarioEncontrado)
+                        } else {
+                            Toast.makeText(context, "Contraseña incorrecta", Toast.LENGTH_SHORT).show()
                         }
+                    } else {
+                        Toast.makeText(context, "Usuario no encontrado, creando usuario...", Toast.LENGTH_SHORT).show()
+
+                        val nuevoUsuario = EntLogin(usuario = usuario, password = contrasena)
+                        val usuarioID = loginHelper.insertarUsuario(nuevoUsuario)
+
+                        Toast.makeText(context, "Nuevo usuario insertado: $usuario", Toast.LENGTH_SHORT).show()
+
+                        // Si el usuario no existe, pasamos el nombre para ir a la pantalla principal
+                        navigateToPantallaPrincipal(usuario)
+                    }
                 }
             }) {
                 Text(text = "Entrar")
             }
-
-
         }
 
         Spacer(modifier = Modifier.weight(0.1f))
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PantallaLoginPreview() {
-    PantallaLogin( navigateToPantallaPrincipal = {}, navigateToBack = {})
 }
