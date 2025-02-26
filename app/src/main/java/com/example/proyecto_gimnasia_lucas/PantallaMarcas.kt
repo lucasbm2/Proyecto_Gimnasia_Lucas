@@ -183,7 +183,6 @@ fun MostrarDatos(
     }
 }
 
-
 fun calcularNotaAbdominales(resultado: Float, datosUsuario: DatosUsuario): String {
     return when (datosUsuario.genero) {
         "Hombre" -> when (datosUsuario.edad) {
