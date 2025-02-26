@@ -43,29 +43,25 @@ fun NavigationWrapper() {
             )
         }
 
-        composable("PruebaRV") { backStackEntry ->
-            val datosUsuario = backStackEntry.savedStateHandle?.get<DatosUsuario>("datosUsuario")
+        composable("PruebaRV") {
+            val datosUsuario = navController.previousBackStackEntry?.savedStateHandle?.get<DatosUsuario>("datosUsuario")
 
             PruebasList(
                 datosUsuario = datosUsuario ?: DatosUsuario(0, 0, 0, "Sin género"),
                 onItemClick = { prueba, datosUsuario ->
-                    println(" Guardando datos antes de navegar: $datosUsuario")
+                    println("Guardando datos antes de navegar a PantallaMarcas: $datosUsuario")
 
 
                     navController.currentBackStackEntry?.savedStateHandle?.set("datosUsuario", datosUsuario)
-
-
-
                     navController.navigate("PantallaMarcas")
-                }
-
-                ,
+                },
                 navigateToBack = { navController.popBackStack() }
             )
         }
 
-        composable("PantallaMarcas") { backStackEntry ->
-            val datosUsuario = backStackEntry.savedStateHandle?.get<DatosUsuario>("datosUsuario")
+
+        composable("PantallaMarcas") {
+            val datosUsuario = navController.previousBackStackEntry?.savedStateHandle?.get<DatosUsuario>("datosUsuario")
 
             if (datosUsuario != null) {
                 println("DatosUsuario recuperado en PantallaMarcas: $datosUsuario")
@@ -74,6 +70,7 @@ fun NavigationWrapper() {
                 println("No se encontraron datos del usuario.")
             }
         }
+
     }
 
 }

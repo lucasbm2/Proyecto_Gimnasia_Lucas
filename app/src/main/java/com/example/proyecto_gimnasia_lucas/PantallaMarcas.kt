@@ -44,15 +44,4 @@ fun MostrarDatos(datosUsuario: DatosUsuario?) {
             Text(text = "Género: ${datosUsuario.genero}")
         }
     }
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(text = "Marcas", fontSize = 24.sp, fontWeight = FontWeight.Bold)
-        Text(text = "Marcas", fontSize = 24.sp, fontWeight = FontWeight.Bold)
-        Text(text = "Marcas", fontSize = 24.sp, fontWeight = FontWeight.Bold)
-        Text(text = "Marcas", fontSize = 24.sp, fontWeight = FontWeight.Bold)
-
-    }
 }
