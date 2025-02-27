@@ -1,6 +1,7 @@
 package com.example.proyecto_gimnasia_lucas
 
 import android.os.Parcelable
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -33,9 +34,11 @@ import kotlinx.parcelize.Parcelize
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
-
+import androidx.compose.ui.graphics.Color
 
 
 @Composable
@@ -101,7 +104,7 @@ fun PantallaPrincipal(
             )
         }
 
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.height(40.dp))
 
         Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
             Button(onClick = {
@@ -113,11 +116,17 @@ fun PantallaPrincipal(
                 )
                 guardarDatos()
                 navigateToPruebas(datosUsuario)
-            }, modifier = Modifier.size(width = 150.dp, height = 50.dp)) {
-                Text("Ir a Pruebas")
+            }, modifier = Modifier.size(width = 200.dp, height = 60.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF90EE90),
+                    contentColor = Color.Black
+                )) {
+                Text("Ir a Pruebas",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold)
             }
 
-            Spacer(modifier = Modifier.width(80.dp))
+            Spacer(modifier = Modifier.width(20.dp))
 
         }
 
@@ -182,16 +191,25 @@ fun PantallaPrincipal(
     }
 
     MyDialog(show = showDialog, onDismiss = { showDialog = false }, onConfirm = {
-        guardarDatos()
-        navigateToCalculoIMC(
-            DatosUsuario(
-                peso = peso.toInt(),
-                edad = edad.toInt(),
-                altura = altura.toInt(),
-                genero = genero
+        val pesoInt = peso.toIntOrNull() ?: 0
+        val edadInt = edad.toIntOrNull() ?: 0
+        val alturaInt = altura.toIntOrNull() ?: 0
+
+        if (pesoInt == null || edadInt == null || alturaInt == null) {
+            Toast.makeText(context, "Por favor, introduce valores válidos", Toast.LENGTH_SHORT).show()
+            showDialog = false
+        } else {
+            guardarDatos()
+            navigateToCalculoIMC(
+                DatosUsuario(
+                    peso = pesoInt,
+                    edad = edadInt,
+                    altura = alturaInt,
+                    genero = genero
+                )
             )
-        )
-        showDialog = false
+            showDialog = false
+        }
     })
 }
 
