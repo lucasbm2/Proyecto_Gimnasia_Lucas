@@ -18,7 +18,7 @@ import com.example.proyecto_gimnasia_lucas.model.PruebasList
 
 
 @Composable
-fun NavigationWrapper( onThemeToggle : () -> Unit) {
+fun NavigationWrapper(onThemeToggle: () -> Unit) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "PantallaInicial") {
@@ -30,7 +30,7 @@ fun NavigationWrapper( onThemeToggle : () -> Unit) {
             PantallaLogin(
                 navigateToPantallaPrincipal = { navController.navigate("PantallaPrincipal") },
                 navigateToBack = { navController.popBackStack() }
-            )
+            ) { navController.navigate("PantallaContrasena") }
         }
 
         composable("PantallaCalculoIMC") {
@@ -54,11 +54,17 @@ fun NavigationWrapper( onThemeToggle : () -> Unit) {
                 nombreUsuario = nombreUsuario,
                 navigateToNotas = { navController.navigate("PantallaNotas") },
                 navigateToPruebas = { datosUsuario ->
-                    navController.currentBackStackEntry?.savedStateHandle?.set("datosUsuario", datosUsuario)
+                    navController.currentBackStackEntry?.savedStateHandle?.set(
+                        "datosUsuario",
+                        datosUsuario
+                    )
                     navController.navigate("PruebaRV")
                 },
                 navigateToCalculoIMC = { datosUsuario ->
-                    navController.currentBackStackEntry?.savedStateHandle?.set("datosUsuario", datosUsuario)
+                    navController.currentBackStackEntry?.savedStateHandle?.set(
+                        "datosUsuario",
+                        datosUsuario
+                    )
                     navController.navigate("PantallaCalculoIMC")
                 },
                 onThemeToggle = onThemeToggle
@@ -68,7 +74,8 @@ fun NavigationWrapper( onThemeToggle : () -> Unit) {
 
 
         composable("PruebaRV") {
-            val datosUsuario = navController.previousBackStackEntry?.savedStateHandle?.get<DatosUsuario>("datosUsuario")
+            val datosUsuario =
+                navController.previousBackStackEntry?.savedStateHandle?.get<DatosUsuario>("datosUsuario")
 
             PruebasList(
                 datosUsuario = datosUsuario ?: DatosUsuario(0, 0, 0, "Sin género"),
@@ -76,7 +83,10 @@ fun NavigationWrapper( onThemeToggle : () -> Unit) {
 
 
                     navController.currentBackStackEntry?.savedStateHandle?.set("prueba", prueba)
-                    navController.currentBackStackEntry?.savedStateHandle?.set("datosUsuario", datosUsuario)
+                    navController.currentBackStackEntry?.savedStateHandle?.set(
+                        "datosUsuario",
+                        datosUsuario
+                    )
                     navController.navigate("PantallaMarcas")
                 },
                 navigateToBack = { navController.popBackStack() }
@@ -99,7 +109,8 @@ fun NavigationWrapper( onThemeToggle : () -> Unit) {
             )
         }
 
-
+        composable("PantallaContrasena") {
+            PantallaContrasena { navController.popBackStack() }
+        }
     }
-
 }

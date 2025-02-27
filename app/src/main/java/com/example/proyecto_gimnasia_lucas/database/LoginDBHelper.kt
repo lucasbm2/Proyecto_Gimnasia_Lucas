@@ -40,33 +40,16 @@ class LoginDBHelper(context: Context): BDDGimnasia(context) {
     }
 
 
-    // Función para actualizar los datos de un usuario
-    fun actualizarUsuario(usuario: EntLogin): Long {
+    fun actualizarUsuario(usuario: String, nuevaContrasena: String): Boolean {
         val db: SQLiteDatabase = this.writableDatabase
-        var usuarioID = -1
+        val values = ContentValues()
+        values.put("password", nuevaContrasena)
 
-        if (usuario.id > 0) {
-            db.beginTransaction()
-            try {
-                val values = ContentValues()
+        val rowsUpdated = db.update("login", values, "usuario = ?", arrayOf(usuario))
 
-                values.put("usuario", usuario.usuario)
-                values.put("password", usuario.password)
-
-                // Actualiza la información del usuario en la tabla 'login'
-                val rows = db.update("login", values, "id = ?", arrayOf(usuario.id.toString()))
-                if (rows > 0) {
-                    db.setTransactionSuccessful()
-                    usuarioID = usuario.id
-                }
-            } catch (e: Exception) {
-                println(e.message)
-            } finally {
-                db.endTransaction()
-            }
-        }
-        return usuarioID.toLong()
+        return rowsUpdated > 0
     }
+
 
     // Función para obtener todos los usuarios
     fun getUsuarios(): List<EntLogin> {

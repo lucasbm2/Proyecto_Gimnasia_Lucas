@@ -2,6 +2,7 @@ package com.example.proyecto_gimnasia_lucas
 
 
 import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,7 +19,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,7 +33,8 @@ import com.example.proyecto_gimnasia_lucas.database.LoginDBHelper
 @Composable
 fun PantallaLogin(
     navigateToPantallaPrincipal: (String) -> Unit = {},
-    navigateToBack: () -> Unit
+    navigateToBack: () -> Unit,
+    navigateToPantallaContrasena: () -> Unit
 ) {
     val context = LocalContext.current
     val loginHelper = LoginDBHelper(context = LocalContext.current)
@@ -60,6 +64,14 @@ fun PantallaLogin(
             placeholder = { Text(text = "Introduce tu contraseña") },
             visualTransformation = PasswordVisualTransformation()
         )
+        Text(
+            text = "Cambiar contraseña",
+            color = Color.DarkGray,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .padding(8.dp)
+                .clickable { navigateToPantallaContrasena()}
+        )
 
         Spacer(modifier = Modifier.weight(0.1f))
 
@@ -74,7 +86,7 @@ fun PantallaLogin(
                 } else if (contrasena.isEmpty()) {
                     Toast.makeText(context, "Introduzca una contraseña", Toast.LENGTH_SHORT).show()
                 } else {
-                    // Obtener el nombre de usuario desde la base de datos
+
                     val nombreUsuarioEncontrado = loginHelper.getNombreUsuarioPorNombre(usuario)
 
                     if (nombreUsuarioEncontrado != null) {
@@ -82,7 +94,6 @@ fun PantallaLogin(
                         if (usuarioExiste) {
                             Toast.makeText(context, "Bienvenido $nombreUsuarioEncontrado", Toast.LENGTH_SHORT).show()
 
-                            // Pasar directamente el nombre encontrado a la siguiente pantalla
                             navigateToPantallaPrincipal(nombreUsuarioEncontrado)
                         } else {
                             Toast.makeText(context, "Contraseña incorrecta", Toast.LENGTH_SHORT).show()
@@ -95,7 +106,6 @@ fun PantallaLogin(
 
                         Toast.makeText(context, "Nuevo usuario insertado: $usuario", Toast.LENGTH_SHORT).show()
 
-                        // Si el usuario no existe, pasamos el nombre para ir a la pantalla principal
                         navigateToPantallaPrincipal(usuario)
                     }
                 }
@@ -103,6 +113,7 @@ fun PantallaLogin(
                 Text(text = "Entrar")
             }
         }
+
 
         Spacer(modifier = Modifier.weight(0.1f))
     }
