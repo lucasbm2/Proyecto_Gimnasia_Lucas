@@ -27,27 +27,4 @@ class DatosDBHelper(context: Context) : BDDGimnasia(context) {
         }
     }
 
-    // Obtener los datos de un usuario
-    fun getDatosUsuario(usuarioId: Int): EntDatos? {
-        val db = readableDatabase
-        val cursor = db.rawQuery("SELECT edad, peso, altura, genero FROM datos WHERE usuario_id = ?", arrayOf(usuarioId.toString()))
-
-        return if (cursor.moveToFirst()) {
-            val edad = cursor.getInt(0)
-            val peso = cursor.getInt(1)
-            val altura = cursor.getInt(2)
-            val genero = cursor.getInt(3) == 1
-            cursor.close()
-            EntDatos(usuarioId, edad, peso, altura, genero)
-        } else {
-            cursor.close()
-            null
-        }
-    }
-
-    // Borrar los datos de un usuario
-    fun borrarDatosUsuario(usuarioId: Int): Int {
-        val db = writableDatabase
-        return db.delete("datos", "usuario_id = ?", arrayOf(usuarioId.toString()))
-    }
 }
