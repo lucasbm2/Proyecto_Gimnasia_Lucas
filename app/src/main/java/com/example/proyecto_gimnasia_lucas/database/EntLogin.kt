@@ -1,5 +1,6 @@
 package com.example.proyecto_gimnasia_lucas.database
 
+//Clase de datos para guardar los datos del login del usuario
 data class EntLogin(
     var id: Int = 0,
     var usuario: String,

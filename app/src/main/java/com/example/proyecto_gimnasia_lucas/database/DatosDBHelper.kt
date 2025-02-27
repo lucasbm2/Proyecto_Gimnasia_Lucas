@@ -5,7 +5,7 @@ import android.content.Context
 
 class DatosDBHelper(context: Context) : BDDGimnasia(context) {
 
-    // Insertar o actualizar los datos del usuario
+    //  Funcion para insertar nuevos datos de usuario o actualizar los existentes
     fun insertarOActualizarDatos(usuarioId: Int, edad: Int, peso: Int, altura: Int, genero: Boolean): Boolean {
         val db = writableDatabase
         val values = ContentValues().apply {
@@ -20,6 +20,7 @@ class DatosDBHelper(context: Context) : BDDGimnasia(context) {
         val exists = cursor.moveToFirst()
         cursor.close()
 
+        //En la tabla datos, mete los valores recogidos buscando la ID del usuario y añade los valores a actualizar
         return if (exists) {
             db.update("datos", values, "usuario_id = ?", arrayOf(usuarioId.toString())) > 0
         } else {

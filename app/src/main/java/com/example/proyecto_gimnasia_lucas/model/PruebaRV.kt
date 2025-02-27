@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.example.proyecto_gimnasia_lucas.DatosUsuario
 import com.example.proyecto_gimnasia_lucas.R
 
+// Item para la lista del recyclerView de pruebas deportivas
 @Composable
 fun ItemPrueba(prueba: Prueba, datosUsuario: DatosUsuario, onItemClick: (Prueba, DatosUsuario) -> Unit) {
     Card(
@@ -59,6 +60,8 @@ fun ItemPrueba(prueba: Prueba, datosUsuario: DatosUsuario, onItemClick: (Prueba,
     }
 }
 
+//OptIn para que me funcione bien stickyView
+//Función para mostrar la lista de pruebas deportivas, es el recyclerView
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PruebasList(
@@ -112,7 +115,8 @@ fun PruebasList(
         else -> emptyList()
     }
 
-    // Agrupar las pruebas por categoría
+    // Recorre las pruebas por categoría y filtra las disponibles
+    //Ignoramos la clave y solo usamos "listaPruebas"
     val pruebasPorCategoria = categoriasPruebas.mapValues { (_, listaPruebas) ->
         pruebasDisponibles.filter { it.nombre in listaPruebas }
     }.filterValues { it.isNotEmpty() } // Filtrar categorías sin pruebas disponibles
@@ -125,8 +129,10 @@ fun PruebasList(
             modifier = Modifier.padding(bottom = 8.dp)
         )
 
+        //RecyclerView
         LazyColumn(modifier = Modifier.weight(1f)) {
             pruebasPorCategoria.forEach { (categoria, pruebas) ->
+                //Cabecera de la categoria
                 stickyHeader {
                     Text(
                         text = categoria,
@@ -136,6 +142,7 @@ fun PruebasList(
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
                 }
+                //Cada elemento dentro del recyclerview
                 items(pruebas) { prueba ->
                     ItemPrueba(
                         prueba = prueba,

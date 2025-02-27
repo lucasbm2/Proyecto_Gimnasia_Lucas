@@ -13,7 +13,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            var isDarkTheme by remember { mutableStateOf(false) } // Estado del tema
+            var isDarkTheme by remember { mutableStateOf(false) } // Variable para el tema oscuro
 
             Proyecto_Gimnasia_LucasTheme(darkTheme = isDarkTheme) {
                 NavigationWrapper { isDarkTheme = !isDarkTheme }

@@ -25,3 +25,7 @@ object PantallaMarcas
 
 @Serializable
 object PruebasList
+
+@Serializable
+object PantallaContrasena
+
