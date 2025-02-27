@@ -36,6 +36,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -53,7 +54,7 @@ fun MostrarDatos(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-        .verticalScroll(rememberScrollState()),
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -66,12 +67,18 @@ fun MostrarDatos(
                 )
                 Text(
                     text = "PRUEBA DE ABDOMINALES",
-                    fontSize = 18.sp,
+                    fontSize = 22.sp,
                     color = MaterialTheme.colorScheme.onBackground,
                     modifier = Modifier.padding(bottom = 10.dp)
                 )
+                LinkActividad(
+                    url = "https://www.foodspring.es/magazine/ejercicio-de-abdominales",
+                    texto = "ENLACE INTERÉS ACTIVIDAD"
+                )
                 Text("Introduce la cantidad de abdominales:", color = MaterialTheme.colorScheme.onBackground)
                 Spacer(modifier = Modifier.height(16.dp))
+
+
             }
 
             "Flexibilidad" -> {
@@ -82,12 +89,17 @@ fun MostrarDatos(
                 )
                 Text(
                     text = "PRUEBA DE FLEXIBILIDAD",
-                    fontSize = 18.sp,
+                    fontSize = 22.sp,
                     color = MaterialTheme.colorScheme.onBackground,
                     modifier = Modifier.padding(bottom = 10.dp)
                 )
+                LinkActividad(
+                    url = "https://www.naradigital.es/blog/detalle-noticias/3005/como-preparar-el-test-de-flexibilidad",
+                    texto = "ENLACE INTERÉS ACTIVIDAD"
+                )
                 Text("Introduce la distancia en cm:", color = MaterialTheme.colorScheme.onBackground)
                 Spacer(modifier = Modifier.height(16.dp))
+
             }
 
             "Test de Cooper" -> {
@@ -98,12 +110,17 @@ fun MostrarDatos(
                 )
                 Text(
                     text = "TEST DE COOPER",
-                    fontSize = 18.sp,
+                    fontSize = 22.sp,
                     color = MaterialTheme.colorScheme.onBackground,
                     modifier = Modifier.padding(bottom = 10.dp)
                 )
                 Text("Introduce la distancia en metros:", color = MaterialTheme.colorScheme.onBackground)
                 Spacer(modifier = Modifier.height(16.dp))
+
+                LinkActividad(
+                    url = "https://universidadeuropea.com/blog/test-cooper/#que-es-el-test-de-cooper",
+                    texto = "ENLACE INTERÉS ACTIVIDAD"
+                )
             }
 
             "Velocidad" -> {
@@ -114,12 +131,17 @@ fun MostrarDatos(
                 )
                 Text(
                     text = "PRUEBA DE VELOCIDAD",
-                    fontSize = 18.sp,
+                    fontSize = 22.sp,
                     color = MaterialTheme.colorScheme.onBackground,
                     modifier = Modifier.padding(bottom = 10.dp)
                 )
+                LinkActividad(
+                    url = "https://es.wikipedia.org/wiki/400_metros",
+                    texto = "ENLACE INTERÉS ACTIVIDAD"
+                )
                 Text("Introduce el tiempo en segundos:", color = MaterialTheme.colorScheme.onBackground)
                 Spacer(modifier = Modifier.height(16.dp))
+
             }
 
             "Lanzamiento Balon 2kg" -> {
@@ -130,12 +152,17 @@ fun MostrarDatos(
                 )
                 Text(
                     text = "PRUEBA DE LANZAMIENTO DE BALÓN",
-                    fontSize = 18.sp,
+                    fontSize = 22.sp,
                     color = MaterialTheme.colorScheme.onBackground,
                     modifier = Modifier.padding(bottom = 10.dp)
                 )
+                LinkActividad(
+                    url = "https://www.bodytone.eu/fr/todo-lo-que-debes-saber-sobre-el-slam-ball/",
+                    texto = "ENLACE INTERÉS ACTIVIDAD"
+                )
                 Text("Introduce la distancia del lanzamiento en metros:", color = MaterialTheme.colorScheme.onBackground)
                 Spacer(modifier = Modifier.height(16.dp))
+
             }
         }
 
@@ -182,6 +209,23 @@ fun MostrarDatos(
         }
     }
 }
+
+@Composable
+fun LinkActividad(url: String, texto: String) {
+    val uriHandler = LocalUriHandler.current
+
+    Text(
+        text = texto,
+        fontSize = 13.sp,
+        fontWeight = FontWeight.Bold,
+        color = Color.Magenta,
+        modifier = Modifier
+            .padding(8.dp)
+            .clickable { uriHandler.openUri(url) }
+    )
+}
+
+
 
 fun calcularNotaAbdominales(resultado: Float, datosUsuario: DatosUsuario): String {
     return when (datosUsuario.genero) {

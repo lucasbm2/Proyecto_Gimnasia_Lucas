@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -87,34 +88,34 @@ fun PruebasList(
     val pruebasDisponibles = when {
         datosUsuario.edad < 12 -> emptyList()
         datosUsuario.edad == 12 -> listOf(
-            Prueba("Abdominales", "Prueba de abdominales", R.drawable.abdominales, ""),
-            Prueba("Flexibilidad", "Prueba de flexibilidad", R.drawable.flexibilidad, ""),
-            Prueba("Test de Cooper", "Prueba de cooper", R.drawable.test_cooper, "")
+            Prueba("Abdominales", "Prueba de abdominales", R.drawable.abdominales, "https://www.foodspring.es/magazine/ejercicio-de-abdominales"),
+            Prueba("Flexibilidad", "Prueba de flexibilidad", R.drawable.flexibilidad, "https://www.naradigital.es/blog/detalle-noticias/3005/como-preparar-el-test-de-flexibilidad"),
+            Prueba("Test de Cooper", "Prueba de cooper", R.drawable.test_cooper, "https://universidadeuropea.com/blog/test-cooper/#que-es-el-test-de-cooper")
         )
         datosUsuario.edad == 13 -> listOf(
-            Prueba("Abdominales", "Prueba de abdominales", R.drawable.abdominales, ""),
-            Prueba("Flexibilidad", "Prueba de flexibilidad", R.drawable.flexibilidad, ""),
-            Prueba("Test de Cooper", "Prueba de cooper", R.drawable.test_cooper, "")
+            Prueba("Abdominales", "Prueba de abdominales", R.drawable.abdominales, "https://www.foodspring.es/magazine/ejercicio-de-abdominales"),
+            Prueba("Flexibilidad", "Prueba de flexibilidad", R.drawable.flexibilidad, "https://www.naradigital.es/blog/detalle-noticias/3005/como-preparar-el-test-de-flexibilidad"),
+            Prueba("Test de Cooper", "Prueba de cooper", R.drawable.test_cooper, "https://universidadeuropea.com/blog/test-cooper/#que-es-el-test-de-cooper")
         )
         datosUsuario.edad == 14 -> listOf(
-            Prueba("Abdominales", "Prueba de abdominales", R.drawable.abdominales, ""),
-            Prueba("Flexibilidad", "Prueba de flexibilidad", R.drawable.flexibilidad, ""),
-            Prueba("Test de Cooper", "Prueba de cooper", R.drawable.test_cooper, ""),
-            Prueba("Velocidad", "Prueba de velocidad", R.drawable.velocidad, "")
+            Prueba("Abdominales", "Prueba de abdominales", R.drawable.abdominales, "https://www.foodspring.es/magazine/ejercicio-de-abdominales"),
+            Prueba("Flexibilidad", "Prueba de flexibilidad", R.drawable.flexibilidad, "https://www.naradigital.es/blog/detalle-noticias/3005/como-preparar-el-test-de-flexibilidad"),
+            Prueba("Test de Cooper", "Prueba de cooper", R.drawable.test_cooper, "https://universidadeuropea.com/blog/test-cooper/#que-es-el-test-de-cooper"),
+            Prueba("Velocidad", "Prueba de velocidad", R.drawable.velocidad, "https://es.wikipedia.org/wiki/400_metros")
         )
         datosUsuario.edad == 15 -> listOf(
-            Prueba("Abdominales", "Prueba de abdominales", R.drawable.abdominales, ""),
-            Prueba("Flexibilidad", "Prueba de flexibilidad", R.drawable.flexibilidad, ""),
-            Prueba("Test de Cooper", "Prueba de cooper", R.drawable.test_cooper, ""),
-            Prueba("Velocidad", "Prueba de velocidad", R.drawable.velocidad, ""),
-            Prueba("Lanzamiento Balon 2kg", "Prueba de lanzamiento de balón", R.drawable.balon, "")
+            Prueba("Abdominales", "Prueba de abdominales", R.drawable.abdominales, "https://www.foodspring.es/magazine/ejercicio-de-abdominales"),
+            Prueba("Flexibilidad", "Prueba de flexibilidad", R.drawable.flexibilidad, "https://www.naradigital.es/blog/detalle-noticias/3005/como-preparar-el-test-de-flexibilidad"),
+            Prueba("Test de Cooper", "Prueba de cooper", R.drawable.test_cooper, "https://universidadeuropea.com/blog/test-cooper/#que-es-el-test-de-cooper"),
+            Prueba("Velocidad", "Prueba de velocidad", R.drawable.velocidad, "https://es.wikipedia.org/wiki/400_metros"),
+            Prueba("Lanzamiento Balon 2kg", "Prueba de lanzamiento de balón", R.drawable.balon, "https://www.bodytone.eu/fr/todo-lo-que-debes-saber-sobre-el-slam-ball/")
         )
         datosUsuario.edad >= 16 -> listOf(
-            Prueba("Abdominales", "Prueba de abdominales", R.drawable.abdominales, ""),
-            Prueba("Flexibilidad", "Prueba de flexibilidad", R.drawable.flexibilidad, ""),
-            Prueba("Test de Cooper", "Prueba de cooper", R.drawable.test_cooper, ""),
-            Prueba("Velocidad", "Prueba de velocidad", R.drawable.velocidad, ""),
-            Prueba("Lanzamiento Balon 2kg", "Prueba de lanzamiento de balón", R.drawable.balon, "")
+            Prueba("Abdominales", "Prueba de abdominales", R.drawable.abdominales, "https://www.foodspring.es/magazine/ejercicio-de-abdominales"),
+            Prueba("Flexibilidad", "Prueba de flexibilidad", R.drawable.flexibilidad, "https://www.naradigital.es/blog/detalle-noticias/3005/como-preparar-el-test-de-flexibilidad"),
+            Prueba("Test de Cooper", "Prueba de cooper", R.drawable.test_cooper, "https://universidadeuropea.com/blog/test-cooper/#que-es-el-test-de-cooper"),
+            Prueba("Velocidad", "Prueba de velocidad", R.drawable.velocidad, "https://es.wikipedia.org/wiki/400_metros"),
+            Prueba("Lanzamiento Balon 2kg", "Prueba de lanzamiento de balón", R.drawable.balon, "https://www.bodytone.eu/fr/todo-lo-que-debes-saber-sobre-el-slam-ball/")
         )
         else -> emptyList()
     }
