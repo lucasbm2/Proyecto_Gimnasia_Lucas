@@ -1,5 +1,6 @@
 package com.example.proyecto_gimnasia_lucas.model
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -65,6 +66,7 @@ fun ItemPrueba(prueba: Prueba, datosUsuario: DatosUsuario, onItemClick: (Prueba,
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PruebasList(
     datosUsuario: DatosUsuario,
@@ -132,7 +134,7 @@ fun PruebasList(
 
         LazyColumn(modifier = Modifier.weight(1f)) {
             pruebasPorCategoria.forEach { (categoria, pruebas) ->
-                item {
+                stickyHeader {
                     Text(
                         text = categoria,
                         fontSize = 20.sp,
