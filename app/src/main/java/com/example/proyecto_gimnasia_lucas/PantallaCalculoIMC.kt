@@ -47,17 +47,17 @@ fun PantallaCalculoIMC(navigateToBack: () -> Unit, datosUsuario: DatosUsuario) {
 
         val mensaje = when {
             datosUsuario.genero == "Hombre" -> when (imc) {
-                in 0.0..18.4 -> "Hay que comer más"
-                in 18.5..24.9 -> "De categoría"
-                in 25.0..29.9 -> "Recorta la cerveza de después de trabajar"
-                in 30.0..150.0 -> "Cuidado ahí, salud primero"
+                in 0.0..18.4 -> "Déficit de peso"
+                in 18.5..24.9 -> "Intervalo normal"
+                in 25.0..29.9 -> "Sobrepeso moderado"
+                in 30.0..150.0 -> "Obesidad"
                 else -> "IMC fuera de rango"
             }
             datosUsuario.genero == "Mujer" -> when (imc) {
-                in 0.0..18.4 -> "Come más cosas"
-                in 18.5..24.9 -> "Te mantienes perfectamente"
-                in 25.0..29.9 -> "Recorta los dulces"
-                in 30.0..150.0 -> "Cuidado de verdad"
+                in 0.0..18.4 -> "Déficit de peso"
+                in 18.5..24.9 -> "Intervalo normal"
+                in 25.0..29.9 -> "Sobrepeso moderado"
+                in 30.0..150.0 -> "Obesidad"
                 else -> "IMC fuera de rango"
             }
             else -> "Datos de género no reconocidos"
