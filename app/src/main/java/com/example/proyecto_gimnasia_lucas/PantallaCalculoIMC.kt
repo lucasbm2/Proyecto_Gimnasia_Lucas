@@ -7,10 +7,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+//Funcion para la pantalla de calculo de IMC
 @Composable
 fun PantallaCalculoIMC(navigateToBack: () -> Unit, datosUsuario: DatosUsuario) {
     val imc = if (datosUsuario.altura > 0) {
@@ -36,6 +38,7 @@ fun PantallaCalculoIMC(navigateToBack: () -> Unit, datosUsuario: DatosUsuario) {
         )
 
         Text(
+            //Coger solo 2 decimales
             text = "IMC calculado: %.2f".format(imc),
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
@@ -45,29 +48,31 @@ fun PantallaCalculoIMC(navigateToBack: () -> Unit, datosUsuario: DatosUsuario) {
 
         Spacer(modifier = Modifier.padding(16.dp))
 
+        //Mensajes a mostrar conforme los resultados
         val mensaje = when {
             datosUsuario.genero == "Hombre" -> when (imc) {
                 in 0.0..18.4 -> "Déficit de peso"
                 in 18.5..24.9 -> "Intervalo normal"
                 in 25.0..29.9 -> "Sobrepeso moderado"
                 in 30.0..150.0 -> "Obesidad"
-                else -> "IMC fuera de rango"
+                else -> "IMC no disponible"
             }
             datosUsuario.genero == "Mujer" -> when (imc) {
                 in 0.0..18.4 -> "Déficit de peso"
                 in 18.5..24.9 -> "Intervalo normal"
                 in 25.0..29.9 -> "Sobrepeso moderado"
                 in 30.0..150.0 -> "Obesidad"
-                else -> "IMC fuera de rango"
+                else -> "IMC no disponible"
             }
-            else -> "Datos de género no reconocidos"
+            else -> "No es hombre ni mujer"
         }
 
+        //Para mostrar el resultado
         Text(
             text = mensaje,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onBackground,
+            color = Color.Blue,
             modifier = Modifier.padding(bottom = 8.dp)
         )
 

@@ -21,6 +21,7 @@ import com.example.proyecto_gimnasia_lucas.model.PruebasList
 fun NavigationWrapper(onThemeToggle: () -> Unit) {
     val navController = rememberNavController()
 
+    //NavController es el controlador para navegar entre pantallas
     NavHost(navController = navController, startDestination = PantallaInicial) {
 
         composable<PantallaInicial> {
@@ -36,8 +37,11 @@ fun NavigationWrapper(onThemeToggle: () -> Unit) {
         }
 
         composable<PantallaCalculoIMC> {
+            //Coge la entrada anterior de la pila de navegacion
             val datosUsuario = navController.previousBackStackEntry
+                //Reucpera el objeto que se ha guardado anteriormente
                 ?.savedStateHandle
+                //Clave del objeto
                 ?.get<DatosUsuario>("datosUsuario")
 
             PantallaCalculoIMC(
@@ -49,12 +53,14 @@ fun NavigationWrapper(onThemeToggle: () -> Unit) {
         composable<PantallaPrincipal> {
             val nombreUsuario = navController.previousBackStackEntry
                 ?.savedStateHandle
+                //Busca la clave del objeto que se ha guardado si no es nulo
                 ?.get<String>("nombreUsuario") ?: "Desconocido"
 
             PantallaPrincipal(
                 nombreUsuario = nombreUsuario,
                 navigateToNotas = { navController.navigate(PantallaNotas) },
                 navigateToPruebas = { datosUsuario ->
+                    //Guarda el objeto en la pila de navegacion con la clave datosUsuario
                     navController.currentBackStackEntry?.savedStateHandle?.set(
                         "datosUsuario",
                         datosUsuario
@@ -62,6 +68,7 @@ fun NavigationWrapper(onThemeToggle: () -> Unit) {
                     navController.navigate(PruebaRV)
                 },
                 navigateToCalculoIMC = { datosUsuario ->
+                    //Guarda el objeto en la pila de navegacion con la clave datosUsuario
                     navController.currentBackStackEntry?.savedStateHandle?.set(
                         "datosUsuario",
                         datosUsuario
@@ -74,10 +81,15 @@ fun NavigationWrapper(onThemeToggle: () -> Unit) {
 
         composable<PruebaRV> {
             val datosUsuario =
+                //Busca el objeto que se ha guardado anteriormente y lo recupera
                 navController.previousBackStackEntry?.savedStateHandle?.get<DatosUsuario>("datosUsuario")
 
             PruebasList(
+
                 datosUsuario = datosUsuario ?: DatosUsuario(0, 0, 0, "Sin género"),
+                //Al hacer click en un CARD se navega a la pantalla de marcas
+                //Guarda la prueba en savedStateHandle con clave prueba
+                //Guarda los datos del usuario en savedStateHandle con clave datosUsuario y navega a PantallaMarcas
                 onItemClick = { prueba, datosUsuario ->
                     navController.currentBackStackEntry?.savedStateHandle?.set("prueba", prueba)
                     navController.currentBackStackEntry?.savedStateHandle?.set(

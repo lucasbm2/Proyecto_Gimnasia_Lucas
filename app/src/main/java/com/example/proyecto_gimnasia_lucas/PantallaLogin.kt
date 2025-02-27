@@ -1,6 +1,5 @@
 package com.example.proyecto_gimnasia_lucas
 
-
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -28,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import com.example.proyecto_gimnasia_lucas.database.EntLogin
 import com.example.proyecto_gimnasia_lucas.database.LoginDBHelper
 
-
+//Función para la pantalla de login
 @Composable
 fun PantallaLogin(
     navigateToPantallaPrincipal: (String) -> Unit = {},

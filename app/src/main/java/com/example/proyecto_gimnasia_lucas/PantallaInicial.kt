@@ -16,6 +16,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+//Funcion para la pantalla inicial de la app
+//He puesto una imagen clicable para entrar a la aplicación
 @Composable
 fun PantallaInicial(navigateToLogin: () -> Unit) {
     Box(

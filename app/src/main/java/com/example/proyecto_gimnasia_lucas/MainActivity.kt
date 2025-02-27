@@ -16,7 +16,7 @@ class MainActivity : ComponentActivity() {
             var isDarkTheme by remember { mutableStateOf(false) } // Variable para el tema oscuro
 
             Proyecto_Gimnasia_LucasTheme(darkTheme = isDarkTheme) {
-                NavigationWrapper { isDarkTheme = !isDarkTheme }
+                NavigationWrapper { isDarkTheme = !isDarkTheme } // Cambia el tema al pulsar el botón
             }
         }
     }

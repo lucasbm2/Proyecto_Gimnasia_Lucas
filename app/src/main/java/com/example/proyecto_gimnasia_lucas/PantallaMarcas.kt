@@ -25,6 +25,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.ui.platform.LocalUriHandler
 
+//Función para mostrar los datos de la prueba y calcular su resultado
 @Composable
 fun MostrarDatos(
     datosUsuario: DatosUsuario?,
@@ -34,10 +35,12 @@ fun MostrarDatos(
     var marca by remember { mutableStateOf("") }
     var nota by remember { mutableStateOf("") }
 
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
+            //Para poder hacer scroll al ponerlo en horizontal
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -196,6 +199,7 @@ fun MostrarDatos(
 
 @Composable
 fun LinkActividad(url: String, texto: String) {
+    //UriHandler objeto para poder leer enlaces externos
     val uriHandler = LocalUriHandler.current
 
     Text(

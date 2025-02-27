@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.proyecto_gimnasia_lucas.database.LoginDBHelper
 
+//Función para la pantalla de contraseña
 @Composable
 fun PantallaContrasena( navigateToBack: () -> Unit) {
     val context = LocalContext.current
@@ -53,6 +54,8 @@ fun PantallaContrasena( navigateToBack: () -> Unit) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        //Boton para actualizar la contraseña
+        //Si el el campo no está vacio, si el usuario existe y no es nulo, se actualiza la contraseña
         Button(onClick = {
             if (usuario.isNotEmpty() && nuevaContrasena.isNotEmpty()) {
                 val usuarioExiste = loginHelper.getNombreUsuarioPorNombre(usuario)
