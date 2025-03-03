@@ -1,6 +1,7 @@
 # GIMNASIAPP
 
-GIMNASIAPP es una aplicación desarrollada para el cálculo del IMC y el seguimiento de marcas deportivas. Su objetivo es el control de gestión personal para evaluar la salud de los usuarios.
+GIMNASIAPP es una aplicación desarrollada para el cálculo del IMC y el seguimiento de marcas deportivas.
+Su objetivo es el control de gestión personal para evaluar la salud de los usuarios.
 
 ## Funcionalidades
 
@@ -12,9 +13,8 @@ GIMNASIAPP es una aplicación desarrollada para el cálculo del IMC y el seguimi
 
 ## Estructura del Proyecto
 
-**Paquete principal: com.example.gimnasiapp**
-
 ### Navegación y pantalla principal
+
 - `PantallaInicial`: Pantalla principal de la aplicación.
 - `PantallaLogin`: Permite el registro e inicio de sesión de usuarios.
 - `PantallaContrasena`: Opción para recuperar o cambiar la contraseña.
@@ -22,7 +22,7 @@ GIMNASIAPP es una aplicación desarrollada para el cálculo del IMC y el seguimi
 - `NavigationWrapper` y `Screens`: Gestión de la navegación entre pantallas.
 
 ### Base de Datos
-- `database`
+
   - `BD`: Controlador general de la base de datos.
   - `DatosDBHelper`: Manejo de datos relacionados con marcas deportivas.
   - `LoginDBHelper`: Gestión de credenciales y autenticación de usuarios.
